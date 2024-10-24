@@ -11,7 +11,7 @@
 //! * `5weeks, 2weeks` (is additive, so this would result in 7 weeks)
 //! * `60sec 2weeks` (order doesn't matter)
 //!
-//! See [the grammar](https://github.com/seanbreckenridge/evry/blob/master/src/time.pest) for all
+//! See [the grammar](https://github.com/purarue/evry/blob/master/src/time.pest) for all
 //! possible time durations.
 
 // for pest macros

@@ -99,7 +99,7 @@ location prints the computed tag file location
 duration just lets you use this as a duration parser, without interacting with the filesystem
 it prints the parsed duration in seconds. Running with JSON mode prints more formats
 
-See https://github.com/seanbreckenridge/evry for more examples."
+See https://github.com/purarue/evry for more examples."
         );
         // exit with an unsuccessful exit code so if user is doing some complex argparsing
         // in a bash script, and this fails to parse the arguments,

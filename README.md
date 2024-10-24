@@ -1,6 +1,6 @@
 # evry
 
-A shell-script-centric task scheduler; uses exit codes to determine control flow. Most of the time I call this behind [bgproc](https://github.com/seanbreckenridge/bgproc).
+A shell-script-centric task scheduler; uses exit codes to determine control flow. Most of the time I call this behind [bgproc](https://github.com/purarue/bgproc).
 
 - [Install](#install)
 - [Rationale](#rationale)
@@ -39,7 +39,7 @@ In other words, run the `wget` command every `2 weeks`.
 
 When `evry` exits with a successful exit code, it saves the current time to a metadata file for that tag (`-scrapesite`). That way, when `evry` is run again with that tag, it can compare the current time against that file.
 
-This can _sort of_ be thought of as `cron` alternative, but operations don't run in the background. It requires you to call the command yourself, but it won't run if its already run in the time frame you describe. (However, its not difficult to wrap tasks that run behind `evry` in an infinite loop that runs in the background, which is what [`bgproc`](https://github.com/seanbreckenridge/bgproc) does)
+This can _sort of_ be thought of as `cron` alternative, but operations don't run in the background. It requires you to call the command yourself, but it won't run if its already run in the time frame you describe. (However, its not difficult to wrap tasks that run behind `evry` in an infinite loop that runs in the background, which is what [`bgproc`](https://github.com/purarue/bgproc) does)
 
 You could have an infinite loop running in the background like:
 
@@ -84,7 +84,7 @@ The duration (e.g. `evry 2 months, 5 days`) is parsed with a [`PEG`](https://en.
 - `5weeks, 2weeks` (is additive, so this would result in 7 weeks)
 - `60sec 2weeks` (order doesn't matter)
 
-See [the grammar](https://github.com/seanbreckenridge/evry/blob/5a98d5607654c90a43eb02ee3304d3bcae1a9a3a/src/time.pest#L5-L11) for all possible abbreviations.
+See [the grammar](https://github.com/purarue/evry/blob/5a98d5607654c90a43eb02ee3304d3bcae1a9a3a/src/time.pest#L5-L11) for all possible abbreviations.
 
 This also includes a utility `duration` command to print a parsed duration in seconds:
 
@@ -107,7 +107,7 @@ This could be used to do anything you might use anacron for. For example, to per
 evry 1d -backup && rsync ...
 ```
 
-Or, cache the output of a command, once a day (e.g. my [`jumplist`](https://github.com/seanbreckenridge/dotfiles/blob/baf92d5fed00b87167b509f22d439c5e2075f63b/.local/scripts/generic/jumplist))
+Or, cache the output of a command, once a day (e.g. my [`jumplist`](https://github.com/purarue/dotfiles/blob/baf92d5fed00b87167b509f22d439c5e2075f63b/.local/scripts/generic/jumplist))
 
 ```bash
 
@@ -119,11 +119,11 @@ expensive_command_cached() {
 expensive_command_cached
 ```
 
-I have certain jobs (e.g. scraping websites for metadata, using [`selenium`](https://www.selenium.dev/) to [login to some website and click a button](https://github.com/seanbreckenridge/pythonanywhere-3-months), or [checking my music for metadata](https://github.com/seanbreckenridge/plaintext_playlist_py) that I want to run periodically.
+I have certain jobs (e.g. scraping websites for metadata, using [`selenium`](https://www.selenium.dev/) to [login to some website and click a button](https://github.com/purarue/pythonanywhere-3-months), or [checking my music for metadata](https://github.com/purarue/plaintext_playlist_py) that I want to run periodically.
 
-Putting all my jobs I want to run periodically in one [`housekeeping`](https://github.com/seanbreckenridge/dotfiles/blob/master/.local/scripts/linux/housekeeping) script I run daily/weekly gives me the ability to monitor the output easily, but also allows me the flexibility of being able to schedule tasks to run at different rates. It also means that those scripts/commands can prompt me for input/confirmation, since this is run manually from a terminal, not in the background like cron.
+Putting all my jobs I want to run periodically in one [`housekeeping`](https://github.com/purarue/dotfiles/blob/master/.local/scripts/linux/housekeeping) script I run daily/weekly gives me the ability to monitor the output easily, but also allows me the flexibility of being able to schedule tasks to run at different rates. It also means that those scripts/commands can prompt me for input/confirmation, since this is run manually from a terminal, not in the background like cron.
 
-I often use this instead of cron when developing websites, e.g. [here](https://github.com/seanbreckenridge/dbsentinel/blob/32b81d09b201a92f7308ceda0b4323eff52b7df5/update_data#L97-L115), where I use it to periodically run caching tasks for a webservice. Having them in a script like this means its the same interface/environment while I'm developing and deploying, so there's no issues with possibly missing environment variables/being in the wrong directory when deploying to production, and its easy to 'reset' a cron job while I'm developing
+I often use this instead of cron when developing websites, e.g. [here](https://github.com/purarue/dbsentinel/blob/32b81d09b201a92f7308ceda0b4323eff52b7df5/update_data#L97-L115), where I use it to periodically run caching tasks for a webservice. Having them in a script like this means its the same interface/environment while I'm developing and deploying, so there's no issues with possibly missing environment variables/being in the wrong directory when deploying to production, and its easy to 'reset' a cron job while I'm developing
 
 ### Advanced Usage
 
@@ -132,7 +132,7 @@ The `EVRY_DEBUG` environment variable can be set to provide information on what 
 ```
 $ EVRY_DEBUG=1 evry 2 months -pythonanywhere && pythonanywhere_3_months -Hc "$(which chromedriver)"
 tag_name:pythonanywhere
-data_directory:/home/sean/.local/share/evry/data
+data_directory:/home/username/.local/share/evry/data
 log:parsed '2 months' into 5184000000ms
 log:60 days (5184000000ms) haven't elapsed since last run, exiting with code 1
 log:Will next be able to run in '46 days, 16 hours, 46 minutes, 6 seconds' (4034766587ms)
@@ -191,7 +191,7 @@ For reference, typical JSON output when `evry` fails (command doesn't run):
   },
   {
     "type": "data_directory",
-    "body": "/home/sean/.local/share/evry/data"
+    "body": "/home/username/.local/share/evry/data"
   },
   {
     "type": "log",
@@ -230,7 +230,7 @@ If you want to extract multiple values from the output which have distinct keys 
 $ EVRY_JSON=1 evry 12 hours -bleanser-zsh | jq '[.[] | {key: .type, value: .body}] | from_entries'
 {
   "tag_name": "bleanser-zsh",
-  "data_directory": "/home/sean/.local/share/evry/data",
+  "data_directory": "/home/username/.local/share/evry/data",
   "log": "Tag file doesn't exist, creating and exiting with code 0",
   "duration": "43200000",
   "duration_pretty": "12 hours"

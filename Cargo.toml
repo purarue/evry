@@ -1,13 +1,13 @@
 [package]
 name = "evry"
 version = "0.3.4"
-authors = ["Sean Breckenridge <seanbrecke@gmail.com>"]
+authors = ["purarue"]
 edition = "2021"
 description = "A shell-script-centric task scheduler; uses exit codes to determine control flow"
 documentation = "https://docs.rs/evry"
 readme = "README.md"
-homepage = "https://github.com/seanbreckenridge/evry"
-repository = "https://github.com/seanbreckenridge/evry"
+homepage = "https://github.com/purarue/evry"
+repository = "https://github.com/purarue/evry"
 license = "Apache-2.0"
 keywords = ["scheduler", "cron", "anacron"]
 categories = [

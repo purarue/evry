@@ -16,7 +16,7 @@ use std::{
 /// Used to determine where to put local data on the users filesystem
 const APP_INFO: AppInfo = AppInfo {
     name: "evry",
-    author: "seanbreckenridge",
+    author: "purarue",
 };
 
 /// Keeps track of the user data dir, creates directories if they don't exist
