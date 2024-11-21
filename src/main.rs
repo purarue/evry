@@ -147,7 +147,7 @@ See https://github.com/purarue/evry for more examples."
             .map(|arg| arg.chars().skip(1).collect::<String>())
             .collect::<Vec<String>>()
             .join("_");
-        // if user didnt ask for duration, they have to provide a tag
+        // if user didn't ask for duration, they have to provide a tag
         if tag.chars().count() == 0 && first_arg != "duration" {
             eprintln!("Error: passed tag was an empty string\n");
         }
